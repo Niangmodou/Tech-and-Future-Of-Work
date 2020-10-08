@@ -6,5 +6,47 @@
   </head>
   <body>
     <h1>Choose your topic and register your group</h1>
+    <a href="/" class="btn btn-primary">Home</a>
+    <div class="studentForm">
+      <form action="/postGroup" method="POST">
+        Name:
+        <input type="text" name="name" value="" required>
+        NetId:
+        <input type="text" name="netId" value="" required> <br>
+
+        Teammate 1 Name:
+        <input type="text" name="name" value="" required>
+        NetId:
+        <input type="text" name="netId" value="" required> <br>
+
+
+        Teammate 2 Name:
+        <input type="text" name="name" value="">
+        NetId:
+        <input type="text" name="netId" value=""> <br>
+
+        Teammate 3 Name:
+        <input type="text" name="name" value="">
+        NetId:
+        <input type="text" name="netId" value=""> <br>
+
+        <p>Select your topic: </p>
+
+        {% for topic in topics %}
+          <input type="radio" name="topic" value="{{topic}}">
+          <label for="topic">{{topic}}</label> <br>
+        {% endfor %}
+
+
+        {% if message %}
+          <p class="message">{{message}}</p>
+        {% endif %}
+
+        <input type="submit" name="submit" value="Add Group">
+
+      </form>
+
+    </div>
+
   </body>
 </html>
