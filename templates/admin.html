@@ -10,16 +10,20 @@
 
     <div class="signIn">
 
-      <form class="" action="/adminLoginAuth" method="POST">
+      <form class="" action="/adminLoginAuth" method="post">
 
         Username:
         <input type="text" name="name" value="" required> <br>
         Password:
-        <input type="password" name="netId" value="" required> <br>
+        <input type="password" name="password" value="" required> <br>
 
         <input type="submit" name="" value="Login">
 
       </form>
+
+      {% if message %}
+        <p>{{message}}</p>
+      {% endif %}
 
     </div>
   </body>
