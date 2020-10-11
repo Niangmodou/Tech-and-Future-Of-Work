@@ -179,6 +179,8 @@ def login_auth():
 										 password=password_hash).first()
 			print('success')
 			#if success match, we redirect to the home page for admin
+
+			session['username'] = username
 			return redirect(url_for('admin_home'))
 
 		except Exception as e:
@@ -190,6 +192,12 @@ def login_auth():
 def get_password_hash(password):
 	return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
+@app.route('/logout', methods=['POST'])
+def logout():
+	session.pop('username')
+
+	return redirect('/')
+
 @app.route('/admin_home', methods=['GET'])
 def admin_home():
 	try:
@@ -197,13 +205,14 @@ def admin_home():
 
 		print(students)
 
-		students_json = jsonify([s.serialize() for s in students])
-		print('Student: ', students_json)
-		return render_template('users.html', students = students_json)
+		#students_json = jsonify([s.serialize() for s in students])
+		#print('Student: ', students_json)
+		return render_template('users.html', students = students)
 
 	except Exception as e:
 		return str(e)
 
+app.secret_key = 'some random key here. usually in env.'
 
 if __name__ == "__main__":
 	app.run(debug=True)

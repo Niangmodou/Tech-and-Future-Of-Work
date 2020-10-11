@@ -5,11 +5,13 @@
     <title>Admin</title>
   </head>
   <body>
-    <h1>Succesfully Logged In</h1>
-    <h1>Welcome, test</h1>
+    <form class="/logout" action="/logout" method="post">
+      <a href="/" class="">Logout</a>
+    </form>
+    <h1>Welcome, Admin</h1>
 
     {% for student in students %}
-      <h2>Student: {{student.first_name}} {{student.last_name}}</h2>
+      <h2>Student: {{student.first_name}} - {{student.last_name}}</h2>
       <h3>NetId: {{student.netId}}</h3>
       <h3>Topic: {{student.topic}}</h3>
     {% endfor %}
