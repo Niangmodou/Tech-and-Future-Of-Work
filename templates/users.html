@@ -1,24 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
   <head>
     <meta charset="utf-8">
     <title>Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
+
   <body>
     <form class="/logout" action="/logout" method="post">
       <a href="/" class="">Logout</a>
     </form>
     <h1>Welcome, Admin</h1>
-
+    <div class="container">
+        <div class="row">
     {% for topic,students in data.items() %}
-      <h2>Topic: {{topic}}</h2>
+      <div class="card" style="width: 18rem;">
+        {% if topic == "Autonomous Vehicles" %}
+        <img src="https://www.tesla.com/sites/default/files/modelsx-new/social/model-x-social.jpg" class="card-img-top" alt="...">
+        {% elif topic == "Bioprinting" %}
+        <img src="https://i.all3dp.com/wp-content/uploads/2018/11/27171301/biolife4d-181127.jpg" class="card-img-top" alt="...">
+        {% elif topic == "Blockchain" %}
+        <img src="https://blog.equinix.com/wp-content/uploads/2018/01/blockchain.jpg" class="card-img-top" alt="...">
+        {% elif topic == "Commercial UAV"%}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTYnPMPzVNzat1dLVA6HdxJz2CEFRBI_r6KsA&usqp=CAU" class="card-img-top" alt="...">
+        {% elif topic == "Brain-machine Interface"%}
+        <img src="https://cdn.inceptivemind.com/wp-content/uploads/2019/05/brain-chip.jpg" class="card-img-top" alt="...">
+        {% elif topic == "Quantum Computing"%}
+        <img src="https://newsroom.cisco.com/documents/10157/14740/quantum-computing-rt-feature_1200x675_hero_111319.jpg/c2f69334-4d65-4972-a76f-9dbd10ae6cc8?t=1573671140824" class="card-img-top" alt="...">
+        {% elif topic == "IOT & Cloud Computing"%}
+        <img src="https://www.thehindubusinessline.com/info-tech/c0u1dz/article24435933.ece/ALTERNATES/LANDSCAPE_1200/bl17cloud" class="card-img-top" alt="...">
+        {% elif topic == "Digital Fabrication"%}
+        <img src="https://www.greenbiz.com/sites/default/files/images/articles/featured/3dprintingasharkyusstock.png" class="card-img-top" alt="...">
+        {% elif topic == "Nantechnology or Nanobiotechnology"%}
+        <img src="https://www.azonano.com/images/Article_Images/ImageForArticle_5113(1).jpg" class="card-img-top" alt="...">
+        {% elif topic == "Mixed Reality & the Metaverse"%}
+        <img src="https://specials-images.forbesimg.com/imageserve/5d3144097ed2c70009a2c3a1/960x0.jpg?cropX1=916&cropX2=4248&cropY1=304&cropY2=2180" class="card-img-top" alt="...">
+        {% else %}
+        <img src="" class="card-img-top" alt="...">
+        {% endif %}
 
-      {% for student in students %}
-        <h3>Student: {{student.first_name}} - {{student.last_name}}</h3>
-        <h3>NetId: {{student.netId}}</h3>
-      {% endfor %}
+        <div class="card-body">
+          <h5 class="card-title">{{topic}}</h5>
+
+          {% if students == [] %}
+            <p class="card-text">No Students</p>
+          {% endif %}
+
+          {% for student in students %}
+            <p class="card-text">{{student.first_name}} {{student.last_name}} - {{student.netId}}</p>
+          {% endfor %}
+        </div>
+
+      </div>
 
     {% endfor %}
+    </div>
+    </div>
 
   </body>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 </html>

@@ -140,6 +140,7 @@ def commit_database(students, topic):
 
 	return message
 
+#Seperate first and last name
 def get_first_last(name):
 	ind = name.find(' ')
 
@@ -148,6 +149,7 @@ def get_first_last(name):
 
 	return (first_name, last_name)
 
+#Parse out topic name
 def get_topic_name(topic):
 	colon = topic.find(':')
 	comma = topic.find(',')
