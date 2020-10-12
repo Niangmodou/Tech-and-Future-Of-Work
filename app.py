@@ -201,13 +201,29 @@ def logout():
 @app.route('/admin_home', methods=['GET'])
 def admin_home():
 	try:
+		json = {}
+
+		#Get all topcs
+		topics = Topic.query.all()
+
+		#Get all students_json
 		students = Student.query.all()
 
-		print(students)
+		for topic in topics:
+			json[topic.name] = []
 
+		#Find all students who belong to each topic and construct a dict
+		for topic_name in json:
+			students = Student.query.filter_by(topic=topic_name).all()
+
+			json[topic_name] = students
+
+
+		#print(students)
+		print(json)
 		#students_json = jsonify([s.serialize() for s in students])
 		#print('Student: ', students_json)
-		return render_template('users.html', students = students)
+		return render_template('users.html', data = json)
 
 	except Exception as e:
 		return str(e)
