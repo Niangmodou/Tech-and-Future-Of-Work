@@ -1,3 +1,4 @@
+from flask import Flask
 from flask_ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
