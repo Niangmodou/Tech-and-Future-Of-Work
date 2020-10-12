@@ -9,6 +9,9 @@ verify_ssl = true
 flask = "*"
 gunicorn = "*"
 flask-sqlalchemy = "*"
+jsonify = "*"
+flask-script = "*"
+flask-migrate = "*"
 
 [requires]
 python_version = "3.8"
