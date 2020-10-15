@@ -74,7 +74,7 @@ def post_group():
 
 			student_lst.append((teammate_name3, teammate_netId3))
 
-		#Get topics from frontend
+		#Retreive topics from frontend
 		try:
 			topics = Topic.query.filter_by(status = 'True')
 
@@ -85,12 +85,14 @@ def post_group():
 
 		return render_template('student.html', topics=topics, message = message)
 
-
+#Function to add all students in the group and topic to DB
 def commit_database(students, topic):
 	#Check if all the netIDs has already been registered
 	found = False
 
+	#Search All students to check for duplicates
 	for student in students:
+
 		student_netId = student[1]
 		try:
 			#If we have an existing student in our database
@@ -104,9 +106,8 @@ def commit_database(students, topic):
 
 	#Add new students to the database, since no duplicates
 	if not found:
-		#Update topic status
 		try:
-			print(topic)
+			#Update topic status to False
 			topic_db = Topic.query.filter_by(name=topic).first()
 			print(topic_db)
 
@@ -119,11 +120,13 @@ def commit_database(students, topic):
 
 
 		for student in students:
+			#Retrieve vital student information
 			name = student[0]
 			netId = student[1]
 			first_name, last_name = get_first_last(name)
 
 			try:
+				#Creating a new student instance to add
 				new_student = Student(
 					netId = netId,
 					first = first_name,
@@ -233,4 +236,4 @@ def admin_home():
 app.secret_key = 'some random key here. usually in env.'
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(host='0.0.0.0')
