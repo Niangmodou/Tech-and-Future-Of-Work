@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 os.environ['DATABASE_URL'] = "postgresql://localhost/tech-future-of-work"
 app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/tech-future-of-work"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://ewxxbmmjueyovr:c9bd967c93c2c61fbf3ce12d8a220704418b22c88113f2a3d4ec91deedd03c7c@ec2-52-72-34-184.compute-1.amazonaws.com:5432/dfjqlg32idlchq"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -237,4 +237,4 @@ def admin_home():
 app.secret_key = 'some random key here. usually in env.'
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0')
+	app.run()
