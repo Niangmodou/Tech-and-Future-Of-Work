@@ -6,8 +6,9 @@ import os
 
 app = Flask(__name__)
 
-#app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/tech-future-of-work"
+os.environ['DATABASE_URL'] = "postgresql://localhost/tech-future-of-work"
+app.config.from_object(os.environ['APP_SETTINGS'])
+#app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/tech-future-of-work"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
