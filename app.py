@@ -56,6 +56,7 @@ def post_group():
 		#Get current user
 		name = data['name']
 		netID = data['netId']
+		print(name, netID)
 
 		student_lst.append((name, netID))
 
@@ -65,17 +66,17 @@ def post_group():
 		teammate_name1 = ''
 		teammate_netId1 = ''
 
-		if data['name1'] != '' and data['netId1'] != '':
+		if 'name1' in data and 'netId1' in data:
 			teammate_name1 = data['name1']
 			teammate_netId1 = data['netId1']
 
 			student_lst.append((teammate_name1, teammate_netId1))
-
+		print('hi')
 		#Get teammate 2
 		teammate_name2 = ''
 		teammate_netId2 = ''
 
-		if data['name2'] != '' and data['netId2'] != '':
+		if 'name2' in data and 'netId2' in data:
 			teammate_name2 = data['name2']
 			teammate_netId2 = data['netId2']
 
@@ -85,7 +86,7 @@ def post_group():
 		teammate_name3 = ''
 		teammate_netId3 = ''
 
-		if data['name3'] != '' and data['netId3'] != '':
+		if 'name3' in data and 'netId3' in data:
 			teammate_name3 = data['name3']
 			teammate_netId3 = data['netId3']
 
@@ -94,10 +95,12 @@ def post_group():
 		#Retreive topics from frontend
 		try:
 			topics = Topic.query.filter_by(status = 'True')
-
+			print(topics)
 		except Exception as e:
+			print('Error')
 			return str(e)
 		print('Selected Topic: ', topic)
+		print('StudentLst: ', student_lst)
 		message = commit_database(student_lst, topic)
 
 		return render_template('student.html', topics=topics, message = message)
