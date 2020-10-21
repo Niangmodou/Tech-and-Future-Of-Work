@@ -4,18 +4,66 @@
     <meta charset="utf-8">
     <title>Student</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
 
   <style>
   *{
     text-align: center;
   }
+
+  .add{
+    cursor: pointer;
+    color: blue;
+  }
+
+
   </style>
+
+  <script>
+    $(document).ready(function() {
+      var i = 1;
+
+      $('.add').on('click', function() {
+        if(i <= 3){
+          //var field = '<br> <div>'+i+'</div>'
+          var field = '<br> <div> Name '+i+': <input type="text" class="input" name="name'+i+'" value="" required> NetId '+i+': <input type="text" name="netId'+i+'" value="" required> <a href="#" class="remove">Remove</a> </div>';
+
+          $('.names').append(field);
+          i++;
+        }
+      })
+
+
+      $('.names').on('click', '.remove', function(){
+        if(i > 1){
+          $(this).parent('div').remove();
+
+          i--;
+          console.log('Attempted Remove: ',i)
+        }
+      })
+    })
+
+  </script>
+
   <body>
-    <h1>Choose your topic and register your group</h1>
     <a href="/" class="btn btn-primary">Home</a>
+    <h1>Choose your topic and register your group</h1>
     <div class="studentForm">
       <form action="/postGroup" method="POST">
+
+        <div class="names">
+          <span class="add">Add Teammates</span> <br>
+
+          <div>
+            Name:
+            <input type="text" class="input" name="name" value="" required>
+            NetId:
+            <input type="text" name="netId" value="" required>
+          </div>
+        </div>
+        <!--
         Name:
         <input type="text" name="name" value="" required>
         NetId:
@@ -36,20 +84,24 @@
         <input type="text" name="name3" value="">
         NetId:
         <input type="text" name="netId3" value=""> <br>
+      -->
 
         <p>Select your topic: </p>
 
+        <select name="topic" class='select'>
         {% for topic in topics %}
-          <input type="radio" name="topic" value="{{topic}}">
-          <label for="topic">{{topic.name}}</label> <br>
+          <option value="{{topic}}">{{topic.name}}</option>
+          <!-- <input type="radio" name="topic" value="{{topic}}"> -->
+          <!-- <label for="topic">{{topic.name}}</label> <br> -->
         {% endfor %}
+      </select> <br>
 
 
         {% if message %}
           <p class="message">{{message}}</p>
         {% endif %}
 
-        <input type="submit" name="submit" value="Add Group">
+        <input type="submit" name="submit" value="Submit">
 
       </form>
 

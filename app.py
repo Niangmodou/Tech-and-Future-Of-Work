@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 os.environ['DATABASE_URL'] = "postgresql://localhost/tech-future-of-work"
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(os.environ['APP_SETTINGS']) #Uncomment to push to heroku
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://ewxxbmmjueyovr:c9bd967c93c2c61fbf3ce12d8a220704418b22c88113f2a3d4ec91deedd03c7c@ec2-52-72-34-184.compute-1.amazonaws.com:5432/dfjqlg32idlchq"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -32,6 +32,18 @@ def student():
 
 	return render_template('student.html', topics=topics)
 
+'''
+@app.route('/allStudents', methods=['GET'])
+def get_students():
+	#Get all students and their topics
+	try:
+		students = Student.query.all()
+	except Exception as e:
+		return str(e)
+
+	return render_template('studentPage.html', students=students)
+'''
+
 @app.route('/postGroup', methods=['GET', 'POST'])
 def post_group():
 	if request.form:
@@ -50,10 +62,14 @@ def post_group():
 		topic = get_topic_name(data['topic'])
 
 		#Get teammate 1
-		teammate_name1 = data['name1']
-		teammate_netId1 = data['netId1']
+		teammate_name1 = ''
+		teammate_netId1 = ''
 
-		student_lst.append((teammate_name1, teammate_netId1))
+		if data['name1'] != '' and data['netId1'] != '':
+			teammate_name1 = data['name1']
+			teammate_netId1 = data['netId1']
+
+			student_lst.append((teammate_name1, teammate_netId1))
 
 		#Get teammate 2
 		teammate_name2 = ''
@@ -95,6 +111,11 @@ def commit_database(students, topic):
 	for student in students:
 
 		student_netId = student[1]
+		if '@' in student_netId:
+			message = 'Error: Please enter you netID(No @)'
+			found = True
+			break
+
 		try:
 			#If we have an existing student in our database
 			if Student.query.filter_by(netId=student_netId).first():
@@ -169,7 +190,6 @@ def admin_login():
 @app.route('/adminLoginAuth', methods=['GET', 'POST'])
 def login_auth():
 	if request.form:
-		print('ho')
 		data = request.form
 
 		#Get data from front end
@@ -183,16 +203,18 @@ def login_auth():
 		try:
 			user = Admin.query.filter_by(username=username,
 										 password=password_hash).first()
-			print('success')
-			#if success match, we redirect to the home page for admin
+			if user != None:
+				print('success')
+				#if success match, we redirect to the home page for admin
 
-			session['username'] = username
-			return redirect(url_for('admin_home'))
+				session['username'] = username
+				return redirect(url_for('admin_home'))
+
+			return render_template('admin.html', message = 'Invalid Credentials')
 
 		except Exception as e:
 			return str(e)
 
-		return render_template('admin.html', message = 'Invalid Credentials')
 
 
 def get_password_hash(password):
@@ -237,4 +259,5 @@ def admin_home():
 app.secret_key = 'some random key here. usually in env.'
 
 if __name__ == "__main__":
+	app.debug = True
 	app.run()
